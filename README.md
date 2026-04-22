@@ -16,17 +16,17 @@ Validation with [google-libphonenumber](https://github.com/ruimarinho/google-lib
 
 | ngx-intl-tel-input-gg | Angular        | ngx-bootstrap |
 | --------------------- | -------------- | ------------- |
-| 1.x.x                 | 9.x.x - 17.x.x | 6.0.0         |
+| 2.x.x                 | >= 21.0.0      | >= 21.0.0     |
 
 ## Installation
 
 ### Install Dependencies
 
-`$ npm install intl-tel-input@17.0.3 --save`
+`$ npm install intl-tel-input@^27.1.3 --save`
 
 `$ npm install google-libphonenumber --save`
 
-`$ ng add ngx-bootstrap`
+`$ npm install ngx-bootstrap@^21 --save`
 
 If you do not wish to use Bootstrap's global CSS, we now package the project with only the relevant
 bootstrap styling needed for the dropdown. As such, you can remove the bootstrap styling from `angular.json`.
@@ -38,14 +38,14 @@ the bootstrap package. This should keep this dependency a lean feature-add
 
 Add _'intl-tel-input'_ style file:
 
-`./node_modules/intl-tel-input/build/css/intlTelInput.css`
+`intl-tel-input/dist/css/intlTelInput.css`
 
 to **angular.json** styles array:
 
 ```json
 
 "styles": [
-  "./node_modules/intl-tel-input/build/css/intlTelInput.css",
+  "intl-tel-input/dist/css/intlTelInput.css",
   "src/styles.css"
 ],
 
@@ -67,19 +67,7 @@ imports: [NgxIntlTelInputModule];
 
 ## Example
 
-Refer to main app in this repository for working example.
-
-Or this:
-
-[Stackblitz Demo (Angular 8)](https://stackblitz.com/edit/ngx-intl-tel-input-demo-ng-8)
-
-[Stackblitz Demo (Angular 9)](https://stackblitz.com/edit/ngx-intl-tel-input-demo-ng-9)
-
-[Stackblitz Demo (Angular 10)](https://stackblitz.com/edit/ngx-intl-tel-input-demo-ng-10)
-
-[Stackblitz Demo (Angular 11)](https://stackblitz.com/edit/ngx-intl-tel-input-demo-ng-11)
-
-[Stackblitz Demo (Angular 12)](https://stackblitz.com/edit/ngx-intl-tel-input-demo-ng-12)
+Refer to the main app in this repository for a working Angular 21 example.
 
 ```html
 <form #f="ngForm" [formGroup]="phoneForm">
@@ -146,6 +134,18 @@ Following formats are supported
 - Copy license and readme files: `$ npm run copy-files`
 - Create package: `$ npm run npm_pack`
 - Build lib and create package: `$ npm run package`
+
+### Local development and debugging
+
+- Install dependencies once: `$ npm install`
+- Start the demo app: `$ npm start`
+- Edit the library source under `projects/ngx-intl-tel-input/src/lib`
+- The demo app imports the library directly from the workspace sources, so changes in the library are picked up by `ng serve` without packing or publishing first.
+- Library unit tests: `$ npm test`
+- One-off CI-style test run: `$ npm test -- --watch=false --browsers=ChromeHeadless`
+- Build only the library package: `$ npm run build_lib`
+- Build only the demo app: `$ npm run build`
+- For browser debugging, open the demo app in Chrome or Edge devtools. The development build keeps source maps enabled, so breakpoints map back to the TypeScript files in the library.
 
 ### Use locally
 

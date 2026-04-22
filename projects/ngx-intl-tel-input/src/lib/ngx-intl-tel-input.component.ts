@@ -27,6 +27,7 @@ import { PhoneNumberFormat } from './enums/phone-number-format.enum';
 @Component({
   // tslint:disable-next-line: component-selector
   selector: 'ngx-intl-tel-input',
+  standalone: false,
   templateUrl: './ngx-intl-tel-input.component.html',
   styleUrls: ['./bootstrap-dropdown.css', './ngx-intl-tel-input.component.css'],
   providers: [
