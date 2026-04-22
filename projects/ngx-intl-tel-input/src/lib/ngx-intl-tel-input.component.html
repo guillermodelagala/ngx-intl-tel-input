@@ -1,22 +1,27 @@
 <div class="iti iti--allow-dropdown"
 	[ngClass]="separateDialCodeClass">
-	<div class="iti__flag-container"
+	<div class="iti__country-container"
 		dropdown
 		[ngClass]="{'disabled': disabled}"
 		[isDisabled]="disabled">
-		<div class="iti__selected-flag dropdown-toggle"
-			dropdownToggle>
-			<div class="iti__flag"
-				[ngClass]="selectedCountry?.flagClass || ''"></div>
-			<div *ngIf="separateDialCode"
-				class="selected-dial-code">+{{selectedCountry.dialCode}}</div>
-			<div class="iti__arrow"></div>
-		</div>
+		<button type="button"
+			class="iti__selected-country dropdown-toggle"
+			dropdownToggle
+			[disabled]="disabled">
+			<div class="iti__selected-country-primary">
+				<div class="iti__flag"
+					[ngClass]="selectedCountry.flagClass || ''"></div>
+				<div *ngIf="separateDialCode"
+					class="iti__selected-dial-code">+{{selectedCountry.dialCode}}</div>
+				<div class="iti__arrow"></div>
+			</div>
+		</button>
 		<div *dropdownMenu
-			class="dropdown-menu country-dropdown">
-			<div class="search-container"
+			class="iti__dropdown-content dropdown-menu country-dropdown">
+			<div class="search-container iti__search-input-wrapper"
 				*ngIf="searchCountryFlag && searchCountryField">
 				<input id="country-search-box"
+					class="iti__search-input"
 					[(ngModel)]="countrySearchText"
 					(keyup)="searchCountry()"
 					(click)="$event.stopPropagation()"
@@ -37,7 +42,7 @@
 					<span class="iti__dial-code">+{{country.dialCode}}</span>
 				</li>
 				<li class="iti__divider"
-					*ngIf="preferredCountriesInDropDown?.length"></li>
+					*ngIf="preferredCountriesInDropDown.length"></li>
 				<li class="iti__country iti__standard"
 					*ngFor="let country of allCountries"
 					(click)="onCountrySelect(country, focusable)"
@@ -54,6 +59,7 @@
 	</div>
 	<input type="tel"
 		[id]="inputId"
+		class="iti__tel-input"
 		autocomplete="off"
 		[ngClass]="cssClass"
 		(blur)="onTouched()"

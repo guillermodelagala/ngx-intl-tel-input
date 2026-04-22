@@ -1,23 +1,26 @@
 li.iti__country:hover {
 	background-color: rgba(0, 0, 0, 0.05);
 }
-.iti__selected-flag.dropdown-toggle:after {
+.iti__selected-country.dropdown-toggle:after {
 	content: none;
 }
-.iti__flag-container.disabled {
+.iti__country-container.disabled {
 	cursor: default !important;
 }
-.iti.iti--allow-dropdown .flag-container.disabled:hover .iti__selected-flag {
+.iti.iti--allow-dropdown .iti__country-container.disabled:hover .iti__selected-country-primary {
 	background: none;
 }
 .country-dropdown {
 	border: 1px solid #ccc;
-	width: fit-content;
-	padding: 1px;
+	width: auto;
+	min-width: 100%;
+	padding: 0;
 	border-collapse: collapse;
+	overflow: hidden;
 }
 .search-container {
 	position: relative;
+	width: 100%;
 }
 .search-container input {
 	width: 100%;
@@ -34,20 +37,33 @@ li.iti__country:hover {
 .iti__country-list {
 	position: relative;
 	border: none;
+	width: 100%;
+}
+
+.iti .iti__dial-code {
+	color: #6c757d;
+	flex-shrink: 0;
+	margin-left: 0.75rem;
 }
 
 .iti input#country-search-box {
 	padding-left: 6px;
 }
 
-.iti .selected-dial-code {
+.iti .iti__selected-dial-code {
 	margin-left: 6px;
 }
 
-.iti.separate-dial-code .iti__selected-flag,
-.iti.separate-dial-code.iti--allow-dropdown.iti-sdc-2 .iti__selected-flag,
-.iti.separate-dial-code.iti--allow-dropdown.iti-sdc-3 .iti__selected-flag,
-.iti.separate-dial-code.iti--allow-dropdown.iti-sdc-4 .iti__selected-flag {
+.iti.iti--allow-dropdown input.iti__tel-input,
+.iti.iti--allow-dropdown input.iti__tel-input[type="tel"],
+.iti.iti--allow-dropdown input.iti__tel-input[type="text"] {
+	padding-left: 52px;
+}
+
+.iti.separate-dial-code .iti__selected-country,
+.iti.separate-dial-code.iti--allow-dropdown.iti-sdc-2 .iti__selected-country,
+.iti.separate-dial-code.iti--allow-dropdown.iti-sdc-3 .iti__selected-country,
+.iti.separate-dial-code.iti--allow-dropdown.iti-sdc-4 .iti__selected-country {
 	width: 93px;
 }
 

@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Angular Demo: Start + Chrome",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm start",
+      "cwd": "${workspaceFolder}",
+      "serverReadyAction": {
+        "action": "startDebugging",
+        "name": "Angular Demo: Chrome",
+        "pattern": "open your browser on (http://localhost:4200/)"
+      }
+    },
+    {
+      "name": "Angular Demo: Chrome",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true
+    },
+    {
+      "name": "Angular Demo: Edge",
+      "type": "pwa-msedge",
+      "request": "launch",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true
+    }
+  ]
+}
