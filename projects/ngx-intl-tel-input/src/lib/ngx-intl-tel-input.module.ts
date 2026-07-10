@@ -1,5 +1,3 @@
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,7 +11,6 @@ import { NgxIntlTelInputComponent } from './ngx-intl-tel-input.component';
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
-		BsDropdownModule,
   ],
 	exports: [NgxIntlTelInputComponent, NativeElementInjectorDirective],
 })
