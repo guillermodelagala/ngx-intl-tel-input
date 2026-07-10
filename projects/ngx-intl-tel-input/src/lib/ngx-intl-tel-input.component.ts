@@ -5,6 +5,7 @@ import {
   ElementRef,
   EventEmitter,
   forwardRef,
+  HostListener,
   Input,
   OnChanges,
   OnInit,
@@ -13,8 +14,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
-
-import { setTheme } from 'ngx-bootstrap/utils';
 
 import { CountryCode } from './data/country-code';
 import { CountryISO } from './enums/country-iso.enum';
@@ -86,17 +85,18 @@ export class NgxIntlTelInputComponent implements OnInit, OnChanges {
   disabled = false;
   errors: Array<any> = ['Phone number is required.'];
   countrySearchText = '';
+  isDropdownOpen = false;
 
   @ViewChild('countryList') countryList: ElementRef;
+  @ViewChild('searchInput') searchInput: ElementRef<HTMLInputElement>;
 
   onTouched = () => {};
   propagateChange = (_: ChangeData) => {};
 
-  constructor(private countryCodeData: CountryCode) {
-    // If this is not set, ngx-bootstrap will try to use the bs3 CSS (which is not what we've embedded) and will
-    // Add the wrong classes and such
-    setTheme('bs4');
-  }
+  constructor(
+    private countryCodeData: CountryCode,
+    private elementRef: ElementRef<HTMLElement>
+  ) {}
 
   ngOnInit() {
     this.init();
@@ -211,6 +211,48 @@ export class NgxIntlTelInputComponent implements OnInit, OnChanges {
     this.checkSeparateDialCodeStyle();
   }
 
+  toggleDropdown(event?: Event): void {
+    event?.stopPropagation();
+
+    if (this.disabled) {
+      return;
+    }
+
+    this.isDropdownOpen = !this.isDropdownOpen;
+
+    if (this.isDropdownOpen && this.searchCountryFlag && this.searchInput) {
+      setTimeout(() => this.searchInput.nativeElement.focus(), 0);
+    }
+  }
+
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+  }
+
+  stopDropdownEvent(event: Event): void {
+    event.stopPropagation();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    if (!this.isDropdownOpen) {
+      return;
+    }
+
+    const target = event.target as Node | null;
+
+    if (target && this.elementRef.nativeElement.contains(target)) {
+      return;
+    }
+
+    this.closeDropdown();
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
+    this.closeDropdown();
+  }
+
   public onPhoneNumberChange(): void {
     let countryCode: string | undefined;
     // Handle the case where the user sets the value programatically based on a persisted ChangeData obj.
@@ -279,6 +321,7 @@ export class NgxIntlTelInputComponent implements OnInit, OnChanges {
 
   public onCountrySelect(country: Country, el: { focus: () => void }): void {
     this.setSelectedCountry(country);
+    this.closeDropdown();
 
     this.checkSeparateDialCodeStyle();
 

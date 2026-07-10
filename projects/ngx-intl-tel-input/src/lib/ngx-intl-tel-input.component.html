@@ -1,12 +1,12 @@
 <div class="iti iti--allow-dropdown"
 	[ngClass]="separateDialCodeClass">
 	<div class="iti__country-container"
-		dropdown
 		[ngClass]="{'disabled': disabled}"
-		[isDisabled]="disabled">
+		(click)="stopDropdownEvent($event)">
 		<button type="button"
 			class="iti__selected-country dropdown-toggle"
-			dropdownToggle
+			(click)="toggleDropdown($event)"
+			[attr.aria-expanded]="isDropdownOpen"
 			[disabled]="disabled">
 			<div class="iti__selected-country-primary">
 				<div class="iti__flag"
@@ -16,17 +16,18 @@
 				<div class="iti__arrow"></div>
 			</div>
 		</button>
-		<div *dropdownMenu
-			class="iti__dropdown-content dropdown-menu country-dropdown">
+		<div class="iti__dropdown-content dropdown-menu country-dropdown"
+			[class.show]="isDropdownOpen">
 			<div class="search-container iti__search-input-wrapper"
 				*ngIf="searchCountryFlag && searchCountryField">
 				<input id="country-search-box"
+					#searchInput
 					class="iti__search-input"
 					[(ngModel)]="countrySearchText"
 					(keyup)="searchCountry()"
 					(click)="$event.stopPropagation()"
 					[placeholder]="searchCountryPlaceholder"
-					autofocus>
+					autocomplete="off">
 			</div>
 			<ul class="iti__country-list"
 				#countryList>
