@@ -4,7 +4,7 @@ Forked from https://github.com/webcat12345/ngx-intl-tel-input
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
 
-[![Build Status](https://travis-ci.org/webcat12345/ngx-intl-tel-input.svg?branch=master)](https://travis-ci.org/webcat12345/ngx-intl-tel-input) [![npm version](https://badge.fury.io/js/ngx-intl-tel-input.svg)](https://badge.fury.io/js/ngx-intl-tel-input) [![npm](https://img.shields.io/npm/dm/localeval.svg)](https://www.npmjs.com/package/ngx-intl-tel-input)
+[![npm version](https://badge.fury.io/js/ngx-intl-tel-input.svg)](https://www.npmjs.com/package/ngx-intl-tel-input) [![npm](https://img.shields.io/npm/dm/localeval.svg)](https://www.npmjs.com/package/ngx-intl-tel-input)
 
 An Angular package for entering and validating international telephone numbers. It adds a flag dropdown to any input, detects the user's country, displays a relevant placeholder and provides formatting/validation methods.
 
@@ -14,25 +14,20 @@ An Angular package for entering and validating international telephone numbers. 
 
 Validation with [google-libphonenumber](https://github.com/ruimarinho/google-libphonenumber)
 
-| ngx-intl-tel-input-gg | Angular        | ngx-bootstrap |
-| --------------------- | -------------- | ------------- |
-| 2.x.x                 | >= 21.0.0      | >= 21.0.0     |
+| ngx-intl-tel-input-gg | Angular |
+| --------------------- | ------- |
+| 2.x.x                 | >=21.x  |
+| 3.x.x                 | >=22.x  |
 
 ## Installation
 
 ### Install Dependencies
 
-`$ npm install intl-tel-input@^27.1.3 --save`
+`$ pnpm add intl-tel-input@^27.1.3`
 
-`$ npm install google-libphonenumber --save`
+`$ pnpm add google-libphonenumber`
 
-`$ npm install ngx-bootstrap@^21 --save`
-
-If you do not wish to use Bootstrap's global CSS, we now package the project with only the relevant
-bootstrap styling needed for the dropdown. As such, you can remove the bootstrap styling from `angular.json`.
-
-Further, Angular CLI should tree-shake the rest of Ngx-Boostrap away if you don't utilize other dependencies from
-the bootstrap package. This should keep this dependency a lean feature-add
+The library includes the dropdown styles it needs. Bootstrap is not required.
 
 ### Add Dependency Style
 
@@ -53,47 +48,37 @@ to **angular.json** styles array:
 
 ### Install This Library
 
-`$ npm install ngx-intl-tel-input-gg --save`
+`$ pnpm add ngx-intl-tel-input-gg`
 
 ## Usage
 
 ### Import
 
-Add `NgxIntlTelInputModule` to your module file:
+Import the standalone component and Signal Forms directive:
 
-```javascript
-imports: [NgxIntlTelInputModule];
+```typescript
+imports: [FormField, NgxIntlTelInputComponent];
 ```
 
 ## Example
 
-Refer to the main app in this repository for a working Angular 21 example.
+Refer to the main app in this repository for a working Angular 22 example.
 
 ```html
-<form #f="ngForm" [formGroup]="phoneForm">
-  <ngx-intl-tel-input
-    [cssClass]="'custom'"
-    [preferredCountries]="[CountryISO.UnitedStates, CountryISO.UnitedKingdom]"
-    [enableAutoCountrySelect]="false"
-    [enablePlaceholder]="true"
-    [searchCountryFlag]="true"
-    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
-    [selectFirstCountry]="false"
-    [selectedCountryISO]="CountryISO.India"
-    [maxLength]="15"
-    [phoneValidation]="true"
-    [inputId]="my-input-id"
-    name="phone"
-    formControlName="phone"
-  ></ngx-intl-tel-input>
+<form novalidate>
+  <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="[CountryISO.UnitedStates, CountryISO.UnitedKingdom]" [enableAutoCountrySelect]="false" [enablePlaceholder]="true" [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.India" [inputId]="'my-input-id'" [formField]="phoneForm.phone"></ngx-intl-tel-input>
 </form>
 ```
+
+Create `phoneForm` with a signal model and apply `required()` and
+`phoneNumberValidator()` in its schema. The component stores
+`ChangeData | null`; an empty field is `null`.
 
 ## Options
 
 | Options                  | Type                     | Default                           | Description                                                                                                   |
 | ------------------------ | ------------------------ | --------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| cssClass                 | `string`                 | `control-form`                    | Bootstrap input css class or your own custom one.                                                             |
+| cssClass                 | `string`                 | `control-form`                    | Input CSS class or your own custom one.                                                                       |
 | preferredCountries       | `<CountryISO>[]`         | `[]`                              | List of countries, which will appear at the top.                                                              |
 | onlyCountries            | `<CountryISO>[]`         | `[]`                              | List of manually selected countries, which will appear in the dropdown.                                       |
 | enableAutoCountrySelect  | `boolean`                | `true`                            | Toggle automatic country (flag) selection based on user input.                                                |
@@ -103,13 +88,12 @@ Refer to the main app in this repository for a working Angular 21 example.
 | searchCountryFlag        | `boolean`                | `false`                           | Enables input search box for countries in the flag dropdown.                                                  |
 | searchCountryField       | `<SearchCountryField>[]` | `[SearchCountryField.All]`        | Customize which fields to search in, if `searchCountryFlag` is enabled. Use `SearchCountryField` helper enum. |
 | searchCountryPlaceholder | `string`                 | `'Search Country'`                | Placeholder value for `searchCountryField`                                                                    |
-| maxLength                | `number`                 | `None`                            | Add character limit.                                                                                          |
+| maxLength                | `number`                 | `None`                            | Maximum input length. With Signal Forms, prefer the schema constraint.                                        |
 | selectFirstCountry       | `boolean`                | `true`                            | Selects first country from `preferredCountries` if is set. If not then uses main list.                        |
-| phoneValidation          | `boolean`                | `true`                            | Disable phone validation.                                                                                     |
 | inputId                  | `string`                 | `phone`                           | Unique ID for `<input>` element.                                                                              |
 | selectedCountryISO       | `<CountryISO>`           | `None`                            | Set specific country on load.                                                                                 |
 | separateDialCode         | `boolean`                | `false`                           | Visually separate dialcode into the drop down element.                                                        |
-| countryChange            | `<Country>`              | `None`                            | Emits country value when the user selects a country from the dropdown.                                        |
+| countryChange            | `OutputRef<Country>`     | `None`                            | Emits the selected country.                                                                                   |
 
 ## Supported Formats
 
@@ -130,21 +114,21 @@ Following formats are supported
 
 ### Helpful commands
 
-- Build lib: `$ npm run build_lib`
-- Copy license and readme files: `$ npm run copy-files`
-- Create package: `$ npm run npm_pack`
-- Build lib and create package: `$ npm run package`
+- Build lib: `$ pnpm run build_lib`
+- Copy license and readme files: `$ pnpm run copy-files`
+- Create package: `$ pnpm run pack`
+- Build lib and create package: `$ pnpm run package`
 
 ### Local development and debugging
 
-- Install dependencies once: `$ npm install`
-- Start the demo app: `$ npm start`
+- Install dependencies once: `$ pnpm install`
+- Start the demo app: `$ pnpm start`
 - Edit the library source under `projects/ngx-intl-tel-input/src/lib`
 - The demo app imports the library directly from the workspace sources, so changes in the library are picked up by `ng serve` without packing or publishing first.
-- Library unit tests: `$ npm test`
-- One-off CI-style test run: `$ npm test -- --watch=false --browsers=ChromeHeadless`
-- Build only the library package: `$ npm run build_lib`
-- Build only the demo app: `$ npm run build`
+- Library unit tests: `$ pnpm test`
+- One-off CI-style test run: `$ pnpm exec ng test ngx-intl-tel-input --no-watch --no-progress`
+- Build only the library package: `$ pnpm run build_lib`
+- Build only the demo app: `$ pnpm run build`
 - For browser debugging, open the demo app in Chrome or Edge devtools. The development build keeps source maps enabled, so breakpoints map back to the TypeScript files in the library.
 
 ### Use locally
@@ -153,7 +137,7 @@ After building and creating package, you can use it locally too.
 
 In your project run:
 
-`$ npm install --save {{path to your local '*.tgz' package file}}`
+`$ pnpm add {{path to your local '*.tgz' package file}}`
 
 ## Contributors
 
