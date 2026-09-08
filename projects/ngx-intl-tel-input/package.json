@@ -1,6 +1,6 @@
 {
   "name": "ngx-intl-tel-input-gg",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "files": [
     "fesm2022/",
     "types/",
@@ -9,9 +9,9 @@
     "LICENSE"
   ],
   "peerDependencies": {
-    "@angular/common": ">=21.0.0",
-    "@angular/core": ">=21.0.0",
-    "@angular/forms": ">=21.0.0",
+    "@angular/common": ">=22.0.0",
+    "@angular/core": ">=22.0.0",
+    "@angular/forms": ">=22.0.0",
     "google-libphonenumber": ">=3.2.44",
     "intl-tel-input": ">=27.1.3"
   },
@@ -25,8 +25,8 @@
   },
   "keywords": [
     "angular",
-    "ng21",
-    "angular 21",
+    "ng22",
+    "angular 22",
     "intl-tel-input",
     "phone number",
     "validation"
