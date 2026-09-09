@@ -13,7 +13,7 @@
     "pack": "cd dist/ngx-intl-tel-input && pnpm pack",
     "package": "pnpm run build_lib && pnpm run copy-files && pnpm run pack"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/common": "^22.1.5",
     "@angular/compiler": "^22.1.5",
